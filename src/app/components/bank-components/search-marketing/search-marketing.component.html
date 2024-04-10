@@ -1,0 +1,84 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Seleccione un producto</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="transactionsByUserForm">
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <mat-form-field appearance="fill">
+            <mat-label>Producto</mat-label>
+            <mat-select [formControlName]="'financialProduct'" (selectionChange)="onChangeIncome($event)">
+              <mat-option *ngFor="let financial of financialProducts" [value]="financial.id">
+                {{financial.descripcion}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3">
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+<br>
+<br>
+<div *ngIf="viewResult">
+  <ng-container>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Saldo promedio de los productos de los clientes por tipo</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="customer">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+              <td mat-cell *matCellDef="let row" class="fw-bold"> {{row.customer}} </td>
+            </ng-container>
+            <ng-container matColumnDef="total">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
+              <td mat-cell *matCellDef="let row"> {{row.total | currency}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</div>
+
+<br>
+<br>
+
+<div *ngIf="viewResult">
+  <ng-container>
+    <mat-form-field>
+      <mat-label>Buscar</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #input>
+    </mat-form-field>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Top 10 Clientes con mayor saldo</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSourceTop10" matSort>
+            <ng-container matColumnDef="customer">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+              <td mat-cell *matCellDef="let row" class="fw-bold"> {{row.customer}} </td>
+            </ng-container>
+            <ng-container matColumnDef="total">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
+              <td mat-cell *matCellDef="let row"> {{row.total | currency}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</div>

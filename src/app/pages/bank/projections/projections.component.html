@@ -1,0 +1,96 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Seleccione la fecha de proyección</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="clienteForm">
+      <div class="row"></div>
+      <div class="row">
+        <br>
+        <div class="col-12 col-md-4">
+          <!-- <mat-form-field class="example-full-width"> -->
+          <input matInput placeholder="Fecha simulación" type="date" formControlName="projectionDate">
+          <!-- </mat-form-field> -->
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+
+<mat-card-header>
+  <mat-card-title>Presione clic sobre la cuenta a simular</mat-card-title>
+</mat-card-header>
+<br>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- Columna: Nombre -->
+    <ng-container matColumnDef="customer">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </th>
+      <td mat-cell *matCellDef="let row"> {{row.customer}} </td>
+    </ng-container>
+
+    <!-- Columna: Producto -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Producto </th>
+      <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+    </ng-container>
+
+    <!-- Columna: Fecha -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+      <td mat-cell *matCellDef="let row"> {{row.date}} </td>
+    </ng-container>
+
+    <!-- Fila con el evento click -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="openDialog(row)"></tr>
+  </table>
+
+  <!-- Paginador -->
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+</div>
+
+<br>
+<br>
+
+
+<div *ngIf="viewSimulation">
+  <div class="mat-elevation-z8">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Simulación {{product}}</mat-card-title>
+      </mat-card-header>
+
+      <table mat-table [dataSource]="dataSourceProjection" matSort>
+
+        <!-- Columna: Nombre -->
+        <ng-container matColumnDef="customer">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </th>
+          <td mat-cell *matCellDef="let row"> {{row.customer}} </td>
+        </ng-container>
+
+        <!-- Columna: Producto -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Monto </th>
+          <td mat-cell *matCellDef="let row"> {{row.amount | currency}} </td>
+        </ng-container>
+
+        <!-- Columna: Fecha -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+          <td mat-cell *matCellDef="let row"> {{row.dateTransaction}} </td>
+        </ng-container>
+
+        <!-- Fila con el evento click -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <!-- Paginador -->
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </mat-card>
+  </div>
+</div>
