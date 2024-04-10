@@ -39,8 +39,8 @@ export class LoginComponent implements OnInit {
   }
 
   async Login(form: any) {
-
-    this.router.navigate([`/menu`])
+    localStorage.setItem("login", "true")
+    this.router.navigate([`/customer/list`])
 
     /*
         await this.UserServicee

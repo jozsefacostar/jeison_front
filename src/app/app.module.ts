@@ -39,8 +39,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     }),
     NgbModule,
     NgxSpinnerModule,
-    //GeneralComponentsModule,
-    LoginModule
+    GeneralComponentsModule
   ],
   providers: [
     {

@@ -3,7 +3,6 @@ import { MaterialModule } from '../material-components/material.module';
 import { MenuComponentComponent } from './menu-component/menu-component.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { GeneralComponentsRoutingModule } from './general-components.routing.module';
 
 @NgModule({
   declarations: [
@@ -12,8 +11,7 @@ import { GeneralComponentsRoutingModule } from './general-components.routing.mod
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule,
-    GeneralComponentsRoutingModule
+    RouterModule
   ],
   exports: [
     MenuComponentComponent
