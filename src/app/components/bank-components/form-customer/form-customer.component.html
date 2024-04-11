@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Formulario de Cliente</mat-card-title>
+    <mat-card-title>Formulario de Persona</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
@@ -18,7 +18,7 @@
         </div>
         <div class="col-12 col-md-4">
           <mat-form-field appearance="fill">
-            <mat-label>Tipo de cliente</mat-label>
+            <mat-label>Tipo de persona</mat-label>
             <mat-select [formControlName]="'customerType'" (selectionChange)="onOpcionSeleccionadaChange($event)">
               <mat-option *ngFor="let customertype of customerTypes" [value]="customertype.id">
                 {{customertype.description}}

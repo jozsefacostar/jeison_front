@@ -1,0 +1,68 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>Formulario de usuario</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
+        <div class="row"></div>
+        <div class="row">
+          <div class="col-6 col-md-4">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Nombre" formControlName="name">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Identificación" formControlName="identification">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4">
+            <mat-form-field appearance="fill">
+              <mat-label>Tipo de persona</mat-label>
+              <mat-select [formControlName]="'customerType'" (selectionChange)="onOpcionSeleccionadaChange($event)">
+                <mat-option *ngFor="let customertype of customerTypes" [value]="customertype.id">
+                  {{customertype.description}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <!-- <div class="col-12 col-md-3">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Indicativo celular" formControlName="numericalndicative">
+            </mat-form-field>
+          </div> -->
+          <div class="col-12 col-md-4">
+            <mat-form-field appearance="fill">
+              <mat-label>Indicativo</mat-label>
+              <mat-select [formControlName]="'numericalndicative'">
+                <mat-option *ngFor="let indicative of lstIndicatives" [value]="indicative.id">
+                  {{(indicative.id)}}-{{indicative.descripcion}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Celular" formControlName="cellphone">
+            </mat-form-field>
+          </div>
+          
+          <div *ngIf="blockFields"  class="col-12 col-md-4">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Nombre Rep. Legal"  formControlName="legalRepresentativeName">
+            </mat-form-field>
+          </div>
+  
+          <div *ngIf="blockFields" class="col-12 col-md-4">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Identificación Rep. Legal" formControlName="legalRepresentativeNameIdentification">
+            </mat-form-field>
+          </div>
+          <div class="col-12">
+            <button mat-raised-button color="primary" type="submit" [disabled]="clienteForm.invalid">Guardar</button>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

@@ -1,15 +1,15 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
-import { FormCustomerComponent } from './form-customer/form-customer.component';
 import { MaterialModule } from '../material-components/material.module';
 import { NgModule } from '@angular/core';
-import { TableCustomerComponent } from './table-customer/table-customer.component';
+import { FormUserComponent } from './form-user/form-user.component';
+import { TableUserComponent } from './table-user/table-user.component';
 
 @NgModule({
   declarations: [
-    FormCustomerComponent,
-    TableCustomerComponent
+    FormUserComponent,
+    TableUserComponent
   ],
   imports: [
     CommonModule,
@@ -18,8 +18,8 @@ import { TableCustomerComponent } from './table-customer/table-customer.componen
     ReactiveFormsModule
   ],
   exports: [
-    FormCustomerComponent,
-    TableCustomerComponent
+    FormUserComponent,
+    TableUserComponent
   ]
 })
-export class BankComponentsModule { }
+export class UserComponentModule { }
