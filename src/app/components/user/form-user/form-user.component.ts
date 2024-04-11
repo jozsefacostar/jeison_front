@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CustomerService } from 'src/app/services/customer/customer.service';
-import { IndicativesServices } from 'src/app/services/customer/list-indicatives.service';
+import { GeneralService } from 'src/app/services/general/general.service';
+import { UserService } from 'src/app/services/user/user.service';
 import Swal from 'sweetalert2'
 
 @Component({
@@ -17,76 +17,39 @@ export class FormUserComponent implements OnInit {
   customerTypes: any[] = [];
   lstIndicatives: any[] = [];
   constructor(private fb: FormBuilder,
-    private customerService: CustomerService,
+    private userService: UserService,
+    private general_Service: GeneralService,
     private router: Router,
-    private indicative: IndicativesServices) { } 
+  ) { }
 
   ngOnInit() {
     this.clienteForm = this.fb.group({
-      name: ['', Validators.required],
-      identification:  [null, [Validators.required]], 
-      customerType: ['', Validators.required],
-      numericalndicative: ['', Validators.required],
-      cellphone:  [null, [Validators.required]], 
-      legalRepresentativeName: ['', Validators.required],
-      legalRepresentativeNameIdentification: [null, [Validators.required]]
+      usuario: [null, [Validators.required, Validators.email]],
+      pass: [null, [Validators.required]]
     });
-    this.getDocumentType();
-    this.lstIndicatives = this.indicative.getAllIndicatives()
   }
 
   async onSubmit() {
     if (this.clienteForm.valid) {
-      await this.customerService.saveCustomer(this.clienteForm.value).subscribe(response => {
+      /** Servicio que crea un usuario */
+      await this.userService
+        .CreateUser(this.clienteForm.value)
+        .then((res: any) => {
           Swal.fire({
             position: "center",
-            icon: response.success ? "success" : "warning",
-            title: response.message,
+            icon: "success",
+            title: "Usuario creado con éxito",
             showConfirmButton: false,
-            timer: 1500
+            timer: 1000
           });
-      })
-
-      setTimeout(() => {
-        this.router.navigateByUrl('/customer/list')
-      }, 1500);
-    }
-  }
-
-  /** Función que consulta los tipos de documentos de un cliente */
-  async getDocumentType() {
-    await this.customerService.getCustomerType().subscribe(res => {
-      if (res.success)
-        res.result.forEach((e: any) => this.customerTypes.push(e));
-    })
-  }
-
-  // Función para manejar el cambio en la opción seleccionada
-  onOpcionSeleccionadaChange(event: any) {
-
-    // Obtén el objeto customerType seleccionado
-    const selectedCustomerType = this.customerTypes.find(customertype => customertype.id === event.value);
-
-    
-    const legalRepresentativeNameControl = this.clienteForm.get('legalRepresentativeName');    
-    const legalRepresentativeNameIdentificationControl = this.clienteForm.get('legalRepresentativeNameIdentification');
-    if (selectedCustomerType.code == 'EMP')
-    {
-      this.blockFields = true;
-      // Aplica o quita el validador required según el valor de aplicarValidadorRequired
-        legalRepresentativeNameControl.setValidators([Validators.required]);
-        legalRepresentativeNameIdentificationControl.setValidators([Validators.required]);
-    }else
-    {
-
-      legalRepresentativeNameControl.setValue('');
-      legalRepresentativeNameIdentificationControl.setValue('');
-
-      this.blockFields = false;
-      legalRepresentativeNameControl.setValidators(null);
-      legalRepresentativeNameIdentificationControl.setValidators(null);
-      legalRepresentativeNameControl.updateValueAndValidity();
-      legalRepresentativeNameIdentificationControl.updateValueAndValidity();
+          setTimeout(() => {
+            this.router.navigateByUrl('/customer/list')
+          }, 1100);
+        })
+        .catch((e) => {
+          console.log(e)
+          this.general_Service.alert(e?.error?.message, 'warning');
+        });
     }
   }
 }

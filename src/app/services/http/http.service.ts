@@ -8,8 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HttpService {
-
-  private hostAPI = 'http://localhost:38481/api/';
+  private hostAPI = 'https://localhost:7012/api/';
 
   constructor(private http: HttpClient) {}
 

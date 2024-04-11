@@ -19,16 +19,16 @@ export class CustomerService {
   
   /*  Función que registra a un cliente */
   saveCustomer(payload: any): HttpResponseType<any> {
-    return this._http.send<any>('post', this._base, payload);
+    console.log(payload)
+    return this._http.send<any>('post', 'Persona/CrearPersona', payload);
   }
 
   /*  Función que consulta todos los clientes */
-  getAllCustomers(): HttpResponseType<any> {
-    return this._http.send<any>('get', this._base);
+  getListPersons(): HttpResponseType<any> {
+    return this._http.send<any>('get','Persona/ListarPersona');
   }
-
-  /*  Función que consulta todos los tipos de clientes */
-  getCustomerType(): HttpResponseType<any> {
-    return this._http.send<any>('get', this._baseCustomerType);
+  /*  Función que consulta los tipos de identificación */
+  getTypeIdentification(): HttpResponseType<any> {
+    return this._http.send<any>('get', 'TipoIdentificacion/Listar');
   }
 }

@@ -1,7 +1,7 @@
 export interface CustomerDto {
-  id: string;
-  name: string;
-  address: string;
-  phone: string;
+  tipoIdentificacion: string;
+  identificacion: string;
+  nombreCompleto: string;
+  fechaCreacion: string;
   email: string;
 }

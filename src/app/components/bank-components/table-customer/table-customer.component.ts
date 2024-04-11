@@ -18,7 +18,7 @@ import { CustomerService } from 'src/app/services/customer/customer.service';
 })
 export class TableCustomerComponent extends SubsManager implements OnInit, AfterViewInit {
  
-  displayedColumns: string[] = ['name','identification','customerTypeNavigation', 'cellphone','legalRepresentativeName','legalRepresentativeNameIdentification'];
+  displayedColumns: string[] = ['tipoIdentificacion','identificacion','nombreCompleto', 'fechaCreacion','email'];
  
   dataSource: MatTableDataSource<CustomerDto>;
   customerss : CustomerDto [] = []
@@ -34,7 +34,7 @@ export class TableCustomerComponent extends SubsManager implements OnInit, After
   }
 
   ngOnInit(): void {
-    this.getCustomers();
+    this.getPersons();
   }
 
   ngAfterViewInit() {
@@ -51,11 +51,10 @@ export class TableCustomerComponent extends SubsManager implements OnInit, After
     }
   }
 
-   /** Función que consulta los tipos de documentos de un cliente */
-   async getCustomers() {
-    await this.customerService.getAllCustomers().subscribe(res => {
-      if (res.success)
-        res.result.forEach((e: CustomerDto) => this.customerss.push(e));
+   /** Función que consulta los tipos de documentos de una persona */
+   async getPersons() {
+    await this.customerService.getListPersons().subscribe(res => {
+        res.forEach((e: CustomerDto) => this.customerss.push(e));
         this.dataSource = new MatTableDataSource(this.customerss);
     })
   }

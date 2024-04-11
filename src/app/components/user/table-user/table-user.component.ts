@@ -51,7 +51,7 @@ export class TableUserComponent extends SubsManager implements OnInit, AfterView
 
    /** Función que consulta los tipos de documentos de un cliente */
    async getCustomers() {
-    await this.customerService.getAllCustomers().subscribe(res => {
+    await this.customerService.getListPersons().subscribe(res => {
       if (res.success)
         res.result.forEach((e: CustomerDto) => this.customerss.push(e));
         this.dataSource = new MatTableDataSource(this.customerss);

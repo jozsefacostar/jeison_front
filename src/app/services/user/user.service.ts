@@ -10,14 +10,34 @@ export class UserService {
     private http: HttpClient
   ) { }
 
-
-
    Login(UserLoginCommand: any) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
     const promise = new Promise<any>((resolve, reject) => {
-      const apiURL = `http://localhost:38481/api/User`;
+      const apiURL = `https://localhost:7012/api/Usuario/Login`;
+      this.http
+        .post<any>(apiURL, JSON.stringify(UserLoginCommand), { headers: headers })
+        .toPromise()
+        .then((res: any) => {
+          // Success
+          resolve(res);
+        },
+          err => {
+            // Error
+            reject(err);
+          }
+        );
+    });
+    return promise;
+  }
+
+  CreateUser(UserLoginCommand: any) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    const promise = new Promise<any>((resolve, reject) => {
+      const apiURL = `https://localhost:7012/api/Usuario/CrearUsuario`;
       this.http
         .post<any>(apiURL, JSON.stringify(UserLoginCommand), { headers: headers })
         .toPromise()
@@ -35,25 +55,5 @@ export class UserService {
   }
 
 
-  Logout(UserLogoutEventHandler: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-    const promise = new Promise<any>((resolve, reject) => {
-      const apiURL = `http://localhost:38481/api/User`;
-      this.http
-        .put<any>(apiURL, JSON.stringify(UserLogoutEventHandler), { headers: headers })
-        .toPromise()
-        .then((res: any) => {
-          // Success
-          resolve(res);
-        },
-          err => {
-            // Error
-            reject(err);
-          }
-        );
-    });
-    return promise;
-  }
+ 
 }

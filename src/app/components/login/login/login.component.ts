@@ -22,8 +22,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      NIT: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
-      Pass: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
+      usuario: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
+      pass: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
     });
   }
 
@@ -31,25 +31,17 @@ export class LoginComponent implements OnInit {
 
   async Login(form: any) {
     var resultLogin = this.fieldValids(form);
-    console.log(resultLogin)
     if (resultLogin) {
       this.general_Service.alert('Por favor ingrese los datos correctos', 'warning');
       return;
     }
-    //TODO: Implementar consulta la backend -> User y Pass 
-    var loginExitoso = true; //this.login(form)
-    if (loginExitoso) {
-      this.setLocalStorage();
-      this.router.navigate([`/customer/list`])
-    }
-    else
-      this.general_Service.alert('Usuario o contraseña incorrectos', 'warning');
+    this.login(form);
   }
 
   /** Función que valida que los datos no sean vacios */
   fieldValids(form): boolean {
     console.log(form)
-    if (!form.NIT || !form.Pass)
+    if (!form.usuario || !form.pass)
       return false;
     console.log(1)
     return true;
@@ -61,20 +53,17 @@ export class LoginComponent implements OnInit {
   }
 
   /** Servicio que consulta las credenciales */
-  async login(form: any): Promise<boolean> {
-    try {
-      const res: any = await this.UserServicee.Login(form.value);
-      if (res.success) {
-        this.general_Service.alert(res.message);
-        return true;
-      } else {
-        this.general_Service.alert(res.message, 'error');
-        return false;
-      }
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
+  async login(form: any) {
+    await this.UserServicee
+      .Login(form.value)
+      .then((res: any) => {
+        this.setLocalStorage();
+        this.router.navigate([`/customer/list`])
+      })
+      .catch((e) => {
+        console.log(e)
+        this.general_Service.alert(e?.error?.message, 'warning');
+      });
   }
 }
 

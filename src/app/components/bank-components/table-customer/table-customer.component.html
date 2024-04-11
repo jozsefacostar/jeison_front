@@ -6,35 +6,32 @@
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-      <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+    <ng-container matColumnDef="tipoIdentificacion">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo identificación </th>
+      <td mat-cell *matCellDef="let row"> {{row.tipoIdentificacion}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="identification">
+    <ng-container matColumnDef="identificacion">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Identificación </th>
-      <td mat-cell *matCellDef="let row"> {{row.identification}} </td>
+      <td mat-cell *matCellDef="let row"> {{row.identificacion}} </td>
     </ng-container>
     
-    <ng-container matColumnDef="customerTypeNavigation">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
-      <td mat-cell *matCellDef="let row"> {{row.customerTypeNavigation}} </td>
+    <ng-container matColumnDef="nombreCompleto">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+      <td mat-cell *matCellDef="let row"> {{row.nombreCompleto}} </td>
     </ng-container>
     
-    <ng-container matColumnDef="cellphone">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Celular </th>
-      <td mat-cell *matCellDef="let row"> {{row.cellphone}} </td>
+    <ng-container matColumnDef="fechaCreacion">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha creación </th>
+      <td mat-cell *matCellDef="let row"> {{row.fechaCreacion}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="legalRepresentativeName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre Rep. Legal </th>
-      <td mat-cell *matCellDef="let row"> {{row.legalRepresentativeName}} </td>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> E-mail </th>
+      <td mat-cell *matCellDef="let row"> {{row.email}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="legalRepresentativeNameIdentification">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID Rep. Legal </th>
-      <td mat-cell *matCellDef="let row"> {{row.legalRepresentativeNameIdentification}} </td>
-    </ng-container>
+  
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -43,5 +40,5 @@
     </tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of personas"></mat-paginator>
 </div>
