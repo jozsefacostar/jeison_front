@@ -1,10 +1,12 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container"> 
   <mat-sidenav #drawer class="sidenav" fixedInViewport="true">
-    <mat-toolbar>Menú</mat-toolbar>
+   <mat-toolbar>
+      Menú
+      <span id="icon-log" class="material-icons" (click)="logOut()">logout</span></mat-toolbar>
     <mat-nav-list>
       <a mat-list-item [routerLink]="['/customer/list']" routerLinkActive="router-link-active"  (click)="drawer.toggle()">Clientes</a>
       <!-- <a mat-list-item [routerLink]="['/customer/list']" routerLinkActive="router-link-active"  (click)="drawer.toggle()">Usuarios</a> -->
-    </mat-nav-list>
+    </mat-nav-list> 
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">

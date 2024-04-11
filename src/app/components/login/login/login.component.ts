@@ -14,8 +14,6 @@ export class LoginComponent implements OnInit {
   flag: boolean = true;
   viewLogin = true;
 
-  loading: boolean = true;
-
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -23,55 +21,60 @@ export class LoginComponent implements OnInit {
     private general_Service: GeneralService) { }
 
   ngOnInit(): void {
-    console.log('login')
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
     this.form = this.fb.group({
       NIT: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
       Pass: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
     });
   }
 
-  Login1(form: any) {
-    this.Login(form)
-
-  }
+  /** Función que dispara el Login */
 
   async Login(form: any) {
-    localStorage.setItem("login", "true")
-    this.router.navigate([`/customer/list`])
-
-    /*
-        await this.UserServicee
-          .Login(form.value)
-          .then((res: any) => {
-            this.loading = false;
-            if (res.success) {
-              this.general_Service.alert(res.message);
-              console.log(res.result)
-              this.setLocalStorage(res.result.ID, res.result.Name, res.result.ProfileCode);
-              switch (res.result.ProfileCode) {
-                case "ADMIN":
-                  this.router.navigate([`./games`])
-                  break;
-                case "USER":
-                  this.router.navigate([`./summary`])
-                  break;
-                default:
-                  break;
-              }
-            }
-            else this.general_Service.alert(res.message, 'error');
-          })
-          .catch((e) => (this.loading = false));
-          */
+    var resultLogin = this.fieldValids(form);
+    console.log(resultLogin)
+    if (resultLogin) {
+      this.general_Service.alert('Por favor ingrese los datos correctos', 'warning');
+      return;
+    }
+    //TODO: Implementar consulta la backend -> User y Pass 
+    var loginExitoso = true; //this.login(form)
+    if (loginExitoso) {
+      this.setLocalStorage();
+      this.router.navigate([`/customer/list`])
+    }
+    else
+      this.general_Service.alert('Usuario o contraseña incorrectos', 'warning');
   }
 
-  setLocalStorage(idUser: string, name: string, perfil: string) {
-    localStorage.setItem("idUser", idUser)
-    localStorage.setItem("nameUser", name)
-    localStorage.setItem("perfilUser", perfil)
+  /** Función que valida que los datos no sean vacios */
+  fieldValids(form): boolean {
+    console.log(form)
+    if (!form.NIT || !form.Pass)
+      return false;
+    console.log(1)
+    return true;
+  }
+
+  /** Función que guarda que el usuario se logueó exitosamente en el localstorage */
+  setLocalStorage() {
+    localStorage.setItem("login", "true")
+  }
+
+  /** Servicio que consulta las credenciales */
+  async login(form: any): Promise<boolean> {
+    try {
+      const res: any = await this.UserServicee.Login(form.value);
+      if (res.success) {
+        this.general_Service.alert(res.message);
+        return true;
+      } else {
+        this.general_Service.alert(res.message, 'error');
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
   }
 }
 
